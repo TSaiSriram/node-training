@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+
+<link rel="stylesheet" href="../../stylesheets/normalize.css">
+<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../../stylesheets/signup.css">
+</head>
+<body>
+    <main>
+            <form action="/auth/login" method="post">
+
+                    <h1>Login</h1>
+        
+                    <fieldset>
+                       
+                        <label for="mail">Email:</label>
+                        <input type="email" id="email" name="email">
+        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password">
+                        
+                        <button type="submit">Login</button>
+                    </fieldset>
+                </form>
+                <form action="/auth/signup" method="get">
+                    <h3>Didn't have an Account</h3>
+                    <button type="submit">Sign Up</button>
+                </form>
+        
+    </main>
+<%- include('../includes/end.ejs') %>
