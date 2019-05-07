@@ -8,33 +8,49 @@ const User = sequelize.define('users', {
         autoIncrement: true,
         primaryKey: true
     },
-    email: {
+    Email: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    password: {
+    Password: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    name: {
+    Name: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    gender: {
+    Gender: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    age: {
+    Age: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    mobile: {
+    Mobile: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    isDeleted: {
+    IsDeleted: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    CreatedBy : {
+        type : Sequelize.STRING,
+        allowNull : false
+    },
+    UpdatedBy : {
+        type : Sequelize.STRING,
+        allowNull :false
+    },
+    CreatedOn : {
+        type : Sequelize.DATE,
+        allowNull : false
+    },
+    UpdatedOn : {
+        type : Sequelize.DATE,
+        allowNull : false
     }
 }, {
         timestamps: false,
