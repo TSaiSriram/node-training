@@ -19,6 +19,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Logging
 const log = require('./util/logger.util');
+//HTTP_CODES
+const statusCode = require('./config/HTTP_CODES');
 // Login and Sign Up routes
 app.use('/auth', authRouter);
 
@@ -28,18 +30,18 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  next(createError(statusCode.NOT_FOUND));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
   if (err.isBoom) {
     var error = {
-      "statusCode": 400,
+      "statusCode": statusCode.BAD_REQUEST,
       "info": "Check Request Payload",
       "error": err.data[0].message.replace(/\"/g, '')
     };
-    res.status(400).send(error);
+    res.status(statusCode.BAD_REQUEST).send(error);
 
   }
   //Error Handling other than Joi Validations
@@ -48,54 +50,54 @@ app.use(function (err, req, res, next) {
     if (err.name == "SequelizeDatabaseError") {
       log.error("Invalid Column")
       var errorMessage = {
-        "statusCode": 404,
+        "statusCode": statusCode.NOT_FOUND,
         "info": "Invalid Column Name / Check DB Columns",
         "error": err
       };
-      res.status(404).send(errorMessage);
+      res.status(statusCode.NOT_FOUND).send(errorMessage);
     }
     //DB Credentials Error
     else if (err.name == "SequelizeAccessDeniedError") {
       log.error("Invalid Password")
       var errorMessage = {
-        "status": 500,
+        "status": statusCode.INTERNAL_SERVER_ERROR,
         "info": "DB Credentials Error",
         "error": err
       };
-      res.status(500).send(errorMessage);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(errorMessage);
     }
 
     else if(err.name == "SequelizeValidationError"){
       log.error("Feild missing");
       const errorMessage = {
-        "status" : 500,
+        "status" : statusCode.INTERNAL_SERVER_ERROR,
         "info" : "DB feilds mismatch",
         "error" : err.message
       }
-      res.status(500).send(errorMessage)
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(errorMessage)
     }
 
     //404 Error
-    else if (err.statusCode == 404) {
+    else if (err.statusCode == statusCode.NOT_FOUND) {
       var errorMessage = {
         "statusCode": parseInt(err.statusCode),
         "error": err.message
       };
-      res.status(404).json(errorMessage);
+      res.status(statusCode.NOT_FOUND).json(errorMessage);
     }
     //400 Error
-    else if (err.statusCode == 400) {
+    else if (err.statusCode == statusCode.BAD_REQUEST) {
       log.error("Bad request");
       var errorMessage = {
         "statusCode": parseInt(err.statusCode),
         "info": "Bad Request",
         "error": err.message
       };
-      res.status(400).json(errorMessage);
+      res.status(statusCode.BAD_REQUEST).json(errorMessage);
     }
     //500 Error
     else {
-      res.status(500).send(err);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     }
   }
 });

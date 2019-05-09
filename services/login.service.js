@@ -1,5 +1,6 @@
 const User = require('../models/users');
 const logger = require('../util/logger.util');
+const statusCode  =require('../config/HTTP_CODES');
 
 exports.getLogin = (req, res) => {
     // Sending the response to user
@@ -15,13 +16,13 @@ exports.postLogin = async (req, res, next) => {
             if (result.password === req.body.password) {
                 // If authenticated
                 logger.info(result.email + " is logged in");
-                res.status(200).send({ Data: "User Authenticated", StatusCode: 200 });
+                res.status(statusCode.OK).send({ Data: "User Authenticated", StatusCode: 200 });
             }
             else {
                 // If not authenticated
                 logger.error(result.email + " not authenticated");
                 const err = {
-                    statusCode: 400,
+                    statusCode: statusCode.BAD_REQUEST,
                     message: "Wrong Password"
                 }
                 next(err);
@@ -30,7 +31,7 @@ exports.postLogin = async (req, res, next) => {
             // If user not found
             logger.error("invalid email");
             const err = {
-                statusCode: 404,
+                statusCode: statusCode.NOT_FOUND,
                 message : "User not found"
             }
             next(err);

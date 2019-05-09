@@ -1,5 +1,7 @@
 const User = require('../models/users');
 const logger = require('../util/logger.util');
+const statusCode = require('../config/HTTP_CODES');
+
 exports.getSignUp = (req, res) => {
     // Sending signup page as response
     res.render('auth/signup', { title: "Sign Up" })
@@ -25,14 +27,14 @@ exports.postSignup = async (req, res, next) => {
         if (result) {
             // If the account created sucessfully
             logger.info("Created User " + result.email + " Sucessfully")
-            res.status(200).send({ Data: "User Created Sucessfully", StatusCode: 200 })
+            res.status(statusCode.OK).send({ Data: "User Created Sucessfully", StatusCode: 200 })
         }
         else {
             // If the account not  created sucessfully
             logger.error("User Creation failed");
             const err =
             {
-                statusCode: 500,
+                statusCode: statusCode.INTERNAL_SERVER_ERROR,
                 message: "User Creation Failed"
             }
             next(err);

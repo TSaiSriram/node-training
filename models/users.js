@@ -36,21 +36,21 @@ const User = sequelize.define('users', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    createdBy : {
-        type : Sequelize.STRING,
-        allowNull : false
+    createdBy: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
-    updatedBy : {
-        type : Sequelize.STRING,
-        allowNull :false
+    updatedBy: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
-    createdOn : {
-        type : Sequelize.DATE,
-        allowNull : false
+    createdOn: {
+        type: Sequelize.DATE,
+        allowNull: false
     },
-    updatedOn : {
-        type : Sequelize.DATE,
-        allowNull : false
+    updatedOn: {
+        type: Sequelize.DATE,
+        allowNull: false
     }
 }, {
         timestamps: false,

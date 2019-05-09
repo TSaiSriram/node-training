@@ -1,5 +1,6 @@
 const User = require('../models/users');
 const logger = require('../util/logger.util');
+const statusCode  = require('../config/HTTP_CODES');
 
 exports.postUsers = async (req, res, next) => {
     try {
@@ -30,12 +31,12 @@ exports.putUser = async (req, res, next) => {
             // Updating the user.
             logger.info("Fetching User data to Update User")
             await User.update(data, { where: { userId: req.params.userId } })
-            const err = { statusCode: 200, message: "Update Sucessfully" }
+            const err = { statusCode: statusCode.OK, message: "Update Sucessfully" }
             next(err);
         }
         else {
             // Responding if the user not found
-            const err = { statusCode: 404, message: "User not found" }
+            const err = { statusCode: statusCode.NOT_FOUND, message: "User not found" }
             next(err);
         }
     } catch (err) {
@@ -56,9 +57,9 @@ exports.deleteUser = async (req, res, next) => {
         const result = await User.update(data, { where: { userId: req.params.userId, isDeleted: 0 } })
         if (result)
             // If the user exists we will delete him
-            res.status(200).send({ Data: "Deleted Sucessfully", StatusCode: 200 })
+            res.status(statusCode.OK).send({ Data: "Deleted Sucessfully", StatusCode: 200 })
         else {
-            const err = { statusCode: 404, message: "User not found" }
+            const err = { statusCode: statusCode.NOT_FOUND, message: "User not found" }
             next(err);
         }
     } catch (error) {
