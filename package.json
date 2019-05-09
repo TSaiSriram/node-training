@@ -11,11 +11,16 @@
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
+    "express-joi-validator": "^2.0.1",
+    "express-validator": "^5.3.1",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
+    "joi": "^14.3.1",
+    "joi-phone-number": "^2.1.1",
     "morgan": "~1.9.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.8.5"
+    "sequelize": "^5.8.5",
+    "winston": "^3.2.1"
   }
 }

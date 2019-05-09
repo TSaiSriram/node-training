@@ -1,10 +1,14 @@
 const router = require('express').Router();
-const userService  = require('../services/users.service');
-/* GET users listing. */
-router.post('/all', userService.postUsers );
+const userService = require('../services/users.service');
+const updateValdation = require('../validation/update.validation');
+const deleteValdation = require('../validation/delete.validate');
+const expressJoi = require('express-joi-validator');
 
-router.put('/update/:email', userService.putUser);
-
-router.delete('/delete', userService.deleteUser);
+/* GET all users  users listing. */
+router.post('/all', userService.postUsers);
+// Update a single user 
+router.put('/update/:userId', expressJoi(updateValdation.updateSchema), userService.putUser);
+//Soft delete a single user
+router.delete('/delete/:userId', expressJoi(deleteValdation.deleteSchema), userService.deleteUser);
 
 module.exports = router;

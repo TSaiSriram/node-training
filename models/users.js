@@ -1,54 +1,54 @@
 const Sequelize = require('sequelize');
 
-const sequelize = require('../util/db');
+const sequelize = require('../util/db.util');
 
 const User = sequelize.define('users', {
-    UserId: {
+    userId: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    Email: {
+    email: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    Password: {
+    password: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    Name: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    Gender: {
+    gender: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    Age: {
+    age: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    Mobile: {
+    mobile: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    IsDeleted: {
+    isDeleted: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    CreatedBy : {
+    createdBy : {
         type : Sequelize.STRING,
         allowNull : false
     },
-    UpdatedBy : {
+    updatedBy : {
         type : Sequelize.STRING,
         allowNull :false
     },
-    CreatedOn : {
+    createdOn : {
         type : Sequelize.DATE,
         allowNull : false
     },
-    UpdatedOn : {
+    updatedOn : {
         type : Sequelize.DATE,
         allowNull : false
     }

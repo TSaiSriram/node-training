@@ -1,12 +1,17 @@
-const Router = require('express').Router();
+const router = require('express').Router();
 const loginService = require('../services/login.service');
+const loginValidation = require('../validation/login.validate');
 const signupService = require('../services/signup.service');
-Router.get('/login', loginService.getLogin );
+const signupValidation = require('../validation/signup.validation');
+const expressJoi = require('express-joi-validator');
 
-Router.get('/signup', signupService.getSignUp);
+// Login page will be served here
+router.get('/login', loginService.getLogin);
+// Login page  will be served here
+router.get('/signup', signupService.getSignUp);
+// The Login data will be validated and send to server for serving
+router.post('/login', expressJoi(loginValidation.login), loginService.postLogin);
+// The Signup data will be validated and send to server for serving
+router.post('/signup', expressJoi(signupValidation.signup), signupService.postSignup);
 
-Router.post('/login', loginService.postLogin);
-
-Router.post('/signup', signupService.postSignup);
-
-module.exports = Router;
+module.exports = router;

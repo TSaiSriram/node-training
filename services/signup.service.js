@@ -1,30 +1,44 @@
 const User = require('../models/users');
-
-exports.getSignUp = (req,res) => {
-    res.render('auth/signup', {title : "Sign Up"})
+const logger = require('../util/logger.util');
+exports.getSignUp = (req, res) => {
+    // Sending signup page as response
+    res.render('auth/signup', { title: "Sign Up" })
 }
 
-exports.postSignup = async (req,res) => {
-try {
-    const result = await User.create({
-        Email : req.body.email,
-        Name : req.body.name,
-        Password : req.body.password,
-        Gender : req.body.gender,
-        Age : req.body.age,
-        Mobile : req.body.mobile,
-        IsDeleted : 0,
-        CreatedBy : req.body.CreatedBy,
-        UpdatedBy : req.body.UpdatedBy, 
-        CreatedOn : new Date(),
-        UpdatedOn : new Date(),
-        
-    })
-    if(result)
-    res.status(200).send({Data : "User Created Sucessfully", StatusCode : 200})
-    else
-    res.status(500).send({Data : "User Creation Failed", StatusCode : 500})
-} catch (error) {
-    console.log(error)
-}
+exports.postSignup = async (req, res, next) => {
+    try {
+        // Creating user account in the database
+        const result = await User.create({
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password,
+            gender: req.body.gender,
+            age: req.body.age,
+            mobile: req.body.mobile,
+            isDeleted: 0,
+            createdBy: req.body.createdBy,
+            updatedBy: req.body.updatedBy,
+            createdOn: new Date(),
+            updatedOn: new Date(),
+
+        })
+        if (result) {
+            // If the account created sucessfully
+            logger.info("Created User " + result.email + " Sucessfully")
+            res.status(200).send({ Data: "User Created Sucessfully", StatusCode: 200 })
+        }
+        else {
+            // If the account not  created sucessfully
+            logger.error("User Creation failed");
+            const err =
+            {
+                statusCode: 500,
+                message: "User Creation Failed"
+            }
+            next(err);
+        }
+    } catch (err) {
+        logger.error(err)
+        next(err);
+    }
 }

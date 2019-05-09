@@ -1,44 +1,68 @@
 const User = require('../models/users');
+const logger = require('../util/logger.util');
 
-exports.postUsers = async (req, res) => {
+exports.postUsers = async (req, res, next) => {
     try {
-        const result = await User.findAll({where : {IsDeleted : 0}});
-        res.status(200).send({ data: result })
+        // Finding all the users to send the data
+        const result = await User.findAll({ where: { isDeleted: 0 } });
+        logger.info("Sending all users data to the server");
+        res.status(200).send({ Users: result });
         return result;
     }
     catch (err) {
-        console.log(err);
+        // Logging the error
+        logger.error(err);
+        next(err);
     }
 }
 
-exports.putUser = async (req, res) => {
+exports.putUser = async (req, res, next) => {
     try {
+        // Creating update info
         const data = {
-            "Name": req.body.name,
-            "UpdatedBy": req.body.name,
-            "UpdatedOn": new Date()
+            "name": req.body.name,
+            "updatedBy": req.body.name,
+            "updatedOn": new Date()
         }
-        const result = await User.update(data, { where: { email: req.params.email } });
-        if (result)
-            res.status(200).send({ Data: "Update Sucessfully", StatusCode: 200 })
-        else
-            res.status(500).send({ Data: "User not found", StatusCode: 500 })
+        // checking the user existed or not
+        const result = await User.findOne({ where: { userId: req.params.userId, isDeleted: 0 } });
+        if (result) {
+            // Updating the user.
+            logger.info("Fetching User data to Update User")
+            await User.update(data, { where: { userId: req.params.userId } })
+            const err = { statusCode: 200, message: "Update Sucessfully" }
+            next(err);
+        }
+        else {
+            // Responding if the user not found
+            const err = { statusCode: 404, message: "User not found" }
+            next(err);
+        }
     } catch (err) {
-        console.log(err);
+        logger.error(err);
+        next(err);
     }
 }
 
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res, next) => {
     try {
+        // making to update for soft delete
         const data = {
-            "IsDeleted": 1
+            "isDeleted": 1,
+            "updatedBy": req.body.name,
+            "updatedOn": new Date()
         }
-        const result = await User.update(data, { where: { email: req.body.email } })
+        // checking if user exists
+        const result = await User.update(data, { where: { userId: req.params.userId, isDeleted: 0 } })
         if (result)
+            // If the user exists we will delete him
             res.status(200).send({ Data: "Deleted Sucessfully", StatusCode: 200 })
-        else
-            res.status(500).send({ Data: "User not found", StatusCode: 500 })
+        else {
+            const err = { statusCode: 404, message: "User not found" }
+            next(err);
+        }
     } catch (error) {
-        console.log(error)
+        logger.error(error);
+        next(err)
     }
 }
