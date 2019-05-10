@@ -6,6 +6,8 @@ const expressJoi = require('express-joi-validator');
 
 /* GET all users  users listing. */
 router.post('/all', userService.postUsers);
+//User Search
+router.post('/search', userService.postSearchUsers);
 // Update a single user 
 router.put('/update/:userId', expressJoi(updateValdation.updateSchema), userService.putUser);
 //Soft delete a single user

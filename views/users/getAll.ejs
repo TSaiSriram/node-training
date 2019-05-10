@@ -1,0 +1,11 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<body>
+<main>
+    <div>
+        <% for(let user in users) { %>
+            <p>{ user.name } and { user.email }</p>
+        <% } %>  
+    </div>
+</main>
+<%- include('../includes/end.ejs') %>

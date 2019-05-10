@@ -27,7 +27,7 @@ exports.postSignup = async (req, res, next) => {
         if (result) {
             // If the account created sucessfully
             logger.info("Created User " + result.email + " Sucessfully")
-            res.status(statusCode.OK).send({ Data: "User Created Sucessfully", StatusCode: 200 })
+            res.status(statusCode.OK).send({ Data: "User Created Sucessfully", StatusCode: statusCode.OK })
         }
         else {
             // If the account not  created sucessfully

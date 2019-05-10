@@ -16,7 +16,7 @@ exports.postLogin = async (req, res, next) => {
             if (result.password === req.body.password) {
                 // If authenticated
                 logger.info(result.email + " is logged in");
-                res.status(statusCode.OK).send({ Data: "User Authenticated", StatusCode: 200 });
+                res.status(statusCode.OK).send({ Data: "User Authenticated", StatusCode: statusCode.OK });
             }
             else {
                 // If not authenticated

@@ -22,7 +22,7 @@ const log = require('./util/logger.util');
 //HTTP_CODES
 const statusCode = require('./config/HTTP_CODES');
 // Login and Sign Up routes
-app.use('/auth', authRouter);
+app.use('/', authRouter);
 
 //User Service routes
 app.use('/users', usersRouter);

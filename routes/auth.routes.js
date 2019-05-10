@@ -6,6 +6,9 @@ const signupValidation = require('../validation/signup.validation');
 const expressJoi = require('express-joi-validator');
 
 // Login page will be served here
+router.get('/', (req,res,next) => {
+    res.redirect('/login');
+})
 router.get('/login', loginService.getLogin);
 // Login page  will be served here
 router.get('/signup', signupService.getSignUp);
