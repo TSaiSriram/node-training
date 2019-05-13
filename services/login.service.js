@@ -1,6 +1,8 @@
 const User = require('../models/users');
 const logger = require('../util/logger.util');
 const statusCode  =require('../config/HTTP_CODES');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.getLogin = (req, res) => {
     // Sending the response to user
@@ -12,11 +14,13 @@ exports.postLogin = async (req, res, next) => {
         // Checking user email is in DB or not
         const result = await User.findOne({ where: { email: req.body.email, isDeleted: 0 } })
         if (result) {
+            const hashedPassword = bcrypt.compare(result.password, req.body.password)
             // Checking user is authenticated or not
-            if (result.password === req.body.password) {
+            if (hashedPassword) {
                 // If authenticated
+                var token = jwt.sign({email : result.email},'ThisIsASecretKey')
                 logger.info(result.email + " is logged in");
-                res.status(statusCode.OK).send({ Data: "User Authenticated", StatusCode: statusCode.OK });
+                res.status(statusCode.OK).send({ StatusCode: statusCode.OK, Data: "User Authenticated" , token : token});
             }
             else {
                 // If not authenticated

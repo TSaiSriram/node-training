@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const logger = require('../util/logger.util');
 const statusCode = require('../config/HTTP_CODES');
+const bcrypt = require('bcryptjs');
 
 exports.getSignUp = (req, res) => {
     // Sending signup page as response
@@ -10,10 +11,12 @@ exports.getSignUp = (req, res) => {
 exports.postSignup = async (req, res, next) => {
     try {
         // Creating user account in the database
+        const Salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, Salt);
         const result = await User.create({
             email: req.body.email,
             name: req.body.name,
-            password: req.body.password,
+            password: hashedPassword,
             gender: req.body.gender,
             age: req.body.age,
             mobile: req.body.mobile,
