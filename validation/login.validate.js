@@ -1,10 +1,13 @@
-const joi = require('joi');
+const joi = require("joi");
 const loginUser = {
-    // Taking data from the req.body and checking email and password
-    body: {
-        email: joi.string().email().required(),
-        password: joi.string().required(),
-    }
-}
+  // Taking data from the req.body and checking email and password
+  body: {
+    email: joi
+      .string()
+      .email()
+      .required(),
+    password: joi.string().required()
+  }
+};
 
-module.exports = { loginUser : loginUser }
+module.exports = { loginUser: loginUser };

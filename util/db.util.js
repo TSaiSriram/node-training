@@ -12,8 +12,7 @@ const sequelize = new Sequelize(DB.name, DB.user, DB.pass, {
 
 sequelize
   .authenticate()
-  .then(function() {
-  })
+  .then(function() {})
   .catch(function(err) {
     logger.error("Error Connecting to Database" + err);
     //  logger.error("Error Connecting to Database" + err);
