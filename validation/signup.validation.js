@@ -1,18 +1,17 @@
 var joi = require('joi');
 var joi = joi.extend(require('joi-phone-number'));
-const signupSchema  = {
+const signupUser = {
     // Checking login for vallidation and return
     body : {
         email: joi.string().email({ minDomainAtoms: 2 }),
-        password: joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-        name: joi.string().alphanum().min(3).max(30).required(),
+        password: joi.string(),
+        name: joi.string().min(3).max(30).required(),
         gender : joi.string().min(4).max(5).required(),
-        age : joi.number().min(1).max(3).required(),
+        age : joi.number().min(1).max(200).required(),
         mobile :  joi.number().min(1000000000).max(9999999999).required(),
-        isDeleted : joi.number().min(1).max(1).integer().required(),
-        createdBy: joi.string().alphanum().min(3).max(30).required(),
-        updatedBy: joi.string().alphanum().min(3).max(30).required()
+        createdBy: joi.string().min(3).max(30).required(),
+        updatedBy: joi.string().min(3).max(30).required()
     }
 };
 
-module.exports = {signupSchema : signupSchema }
+module.exports = {signupUser : signupUser }

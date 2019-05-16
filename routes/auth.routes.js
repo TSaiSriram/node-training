@@ -13,8 +13,8 @@ router.get('/login', loginService.getLogin);
 // Login page  will be served here
 router.get('/signup', signupService.getSignUp);
 // The Login data will be validated and send to server for serving
-router.post('/login', expressJoi(loginValidation.login), loginService.postLogin);
+router.post('/login', expressJoi(loginValidation.loginUser), loginService.postLogin);
 // The Signup data will be validated and send to server for serving
-router.post('/signup', expressJoi(signupValidation.signup), signupService.postSignup);
+router.post('/signup', expressJoi(signupValidation.signupUser), signupService.postSignup);
 
 module.exports = router;

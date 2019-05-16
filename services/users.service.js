@@ -32,8 +32,6 @@ exports.postSearchUsers = async (req, res, next) => {
     req.body.email != undefined && req.body.email != null
       ? (email = req.body.email)
       : (email = "");
-    console.log(email);
-    console.log(req.body.email);
     const result = await User.findAll({
       where: {
         [Op.and]: [

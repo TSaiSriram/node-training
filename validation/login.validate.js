@@ -1,10 +1,10 @@
 const joi = require('joi');
-const loginSchema = {
+const loginUser = {
     // Taking data from the req.body and checking email and password
     body: {
         email: joi.string().email().required(),
-        password: joi.string().required().regex(/^[a-zA-Z0-9]{3,30}$/),
+        password: joi.string().required(),
     }
 }
 
-module.exports = { loginSchema : loginSchema }
+module.exports = { loginUser : loginUser }

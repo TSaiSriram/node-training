@@ -1,8 +1,8 @@
 const joi = require('joi');
-const deleteSchema = {
+const deleteUser = {
     params: {
         userId : joi.number().required()
         }
 }
 
-module.exports = { deleteSchema : deleteSchema }
+module.exports = { deleteUser : deleteUser }

@@ -13,9 +13,12 @@ exports.postLogin = async (req, res, next) => {
     try {
         // Checking user email is in DB or not
         const result = await User.findOne({ where: { email: req.body.email, isDeleted: 0 } })
+        //Checking result
         if (result) {
-            const hashedPassword = bcrypt.compare(result.password, req.body.password)
+            const hashedPassword = await bcrypt.compare(req.body.password, result.password);
             // Checking user is authenticated or not
+            console.log("hello")
+            console.log(result.password)
             if (hashedPassword) {
                 // If authenticated
                 var token = jwt.sign({email : result.email},'ThisIsASecretKey')

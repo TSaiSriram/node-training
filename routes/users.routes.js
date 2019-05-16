@@ -9,8 +9,8 @@ router.post('/all', verifyToken.checkToken ,userService.postUsers);
 //User Search
 router.post('/search', verifyToken.checkToken ,userService.postSearchUsers);
 // Update a single user 
-router.put('/update/:userId', verifyToken.checkToken,expressJoi(updateValdation.updateSchema), userService.putUser);
+router.put('/update/:userId', verifyToken.checkToken,expressJoi(updateValdation.updateUser), userService.putUser);
 //Soft delete a single user
-router.delete('/delete/:userId', verifyToken.checkToken,expressJoi(deleteValdation.deleteSchema), userService.deleteUser);
+router.delete('/delete/:userId', verifyToken.checkToken,expressJoi(deleteValdation.deleteUser), userService.deleteUser);
 
 module.exports = router;
