@@ -10,13 +10,4 @@ const sequelize = new Sequelize(DB.name, DB.user, DB.pass, {
   timezone: "+05:30"
 });
 
-sequelize
-  .authenticate()
-  .then(function() {})
-  .catch(function(err) {
-    logger.error("Error Connecting to Database" + err);
-    //  logger.error("Error Connecting to Database" + err);
-  })
-  .done();
-
 module.exports = sequelize;

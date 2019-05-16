@@ -1,4 +1,4 @@
-const User = require("../models/users");
+const User = require("../models/users").default;
 const logger = require("../util/logger.util");
 const statusCode = require("../config/HTTP_CODES");
 const Sequelize = require("sequelize");
