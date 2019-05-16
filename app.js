@@ -99,8 +99,16 @@ app.use(function(err, req, res, next) {
   }
 });
 
+const users = require("./models/users.js");
+const comments = require("./models/comments.js");
+const posts = require("./models/posts.js");
+
 sequelize.authenticate().then(() => {
   // Database connected
+  comments.belongsTo(posts);
+  posts.hasMany(comments);
+  posts.belongsTo(users);
+  users.hasMany(posts);
 });
 
 module.exports = app;

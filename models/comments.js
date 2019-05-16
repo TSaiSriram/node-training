@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/db.util");
 
-const Comment =  sequelize.define("comments",{
+const Comments =  sequelize.define("comments",{
 commentId : {
     type : Sequelize.INTEGER,
     primaryKey : true,
@@ -22,7 +22,7 @@ comment : {
 {
   timestamps: false,
   freezeTableName: true, // Model tableName will be the same as the model name
-  tableName: "users"
+  tableName: "comments"
 });
 
-module.exports = Comment;
+module.exports = Comments;

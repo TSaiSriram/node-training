@@ -3,18 +3,66 @@ const logger = require("../util/logger.util");
 const statusCode = require("../config/HTTP_CODES");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-exports.postUsers = async (req, res, next) => {
+const posts = require("../models/posts");
+const comments = require("../models/comments");
+exports.getUsers = async (req, res, next) => {
   try {
     // Finding all the users to send the data
-    const result = await User.findAll({ where: { isDeleted: 0 } });
+    const result = await User.findAll(
+      {
+        include: [
+          {
+            model: posts,
+            include: [
+              {
+                model: comments
+              }
+            ]
+          }
+        ]
+      },
+      { where: { isDeleted: 0 } }
+    );
     logger.info("Sending all users data to the server");
+    const resObj = result.map(user => {
+      return Object.assign(
+        {},
+        {
+          userId: user.userId,
+          username: user.name,
+          posts: user.posts.map(post => {
+            return Object.assign(
+              {},
+              {
+                postId: post.postId,
+                userId: post.userUserId,
+                title: post.title,
+                content: post.body,
+                comments: post.comments.map(comment => {
+                  return Object.assign(
+                    {},
+                    {
+                      commentId: comment.commentId,
+                      postId: comment.postId,
+                      commenterId: comment.userUserId,
+                      commentedBy: comment.userName,
+                      comment: comment.comment
+                    }
+                  );
+                })
+              }
+            );
+          })
+        }
+      );
+    });
     res.status(statusCode.OK).send({
       metadata: {
         statusCode: statusCode.OK,
         info: "List of users",
         count: result.length
       },
-      users: result
+      users: resObj
     });
   } catch (err) {
     // Logging the error

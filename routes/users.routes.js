@@ -5,7 +5,9 @@ const deleteValdation = require("../validation/delete.validate");
 const expressJoi = require("express-joi-validator");
 const verifyToken = require("../middleware/jwtTokenVerify");
 /* GET all users  users listing. */
-router.post("/all", verifyToken.checkToken, userService.postUsers);
+router.get("/all", verifyToken.checkToken, userService.getUsers);
+//Create POST
+
 //User Search
 router.post("/search", verifyToken.checkToken, userService.postSearchUsers);
 // Update a single user
@@ -22,5 +24,6 @@ router.delete(
   expressJoi(deleteValdation.deleteUser),
   userService.deleteUser
 );
+
 
 module.exports = router;

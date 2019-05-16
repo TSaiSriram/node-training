@@ -1,4 +1,4 @@
-const User = require("../models/users").default;
+const User = require("../models/users");
 const logger = require("../util/logger.util");
 const statusCode = require("../config/HTTP_CODES");
 const bcrypt = require("bcryptjs");
@@ -22,8 +22,6 @@ exports.postLogin = async (req, res, next) => {
         result.password
       );
       // Checking user is authenticated or not
-      console.log("hello");
-      console.log(result.password);
       if (hashedPassword) {
         // If authenticated
         var token = jwt.sign({ email: result.email }, "ThisIsASecretKey");

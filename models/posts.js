@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/db.util");
 
-const Post = sequelize.define("posts", {
+const Posts = sequelize.define("posts", {
   postId: {
       type : Sequelize.INTEGER,
       allowNull :false,
@@ -31,8 +31,8 @@ const Post = sequelize.define("posts", {
   {
     timestamps: false,
     freezeTableName: true, // Model tableName will be the same as the model name
-    tableName: "users"
+    tableName: "posts"
   }
  );
 
-module.exports = Post;
+module.exports = Posts;
