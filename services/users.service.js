@@ -35,7 +35,8 @@ exports.getUsers = async (req, res, next) => {
               {},
               {
                 postId: post.postId,
-                userId: post.userUserId,
+                userId: post.userId,
+                postedOn : post.postedOn,
                 title: post.title,
                 content: post.body,
                 comments: post.comments.map(comment => {
@@ -44,7 +45,7 @@ exports.getUsers = async (req, res, next) => {
                     {
                       commentId: comment.commentId,
                       postId: comment.postId,
-                      commenterId: comment.userUserId,
+                      userId: comment.userId,
                       commentedBy: comment.userName,
                       comment: comment.comment
                     }

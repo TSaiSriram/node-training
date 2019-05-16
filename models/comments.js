@@ -9,7 +9,15 @@ commentId : {
     allowNull :false,
     autoIncrement : true
 },
-postId : {
+postPostId : {
+    type : Sequelize.INTEGER,
+    allowNull : false
+},
+userName : {
+    type : Sequelize.STRING,
+    allowNull : false
+},
+userId : {
     type : Sequelize.INTEGER,
     allowNull : false
 }

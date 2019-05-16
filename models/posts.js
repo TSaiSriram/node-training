@@ -18,7 +18,7 @@ const Posts = sequelize.define("posts", {
       allowNull : false
   }
   ,
-  postedBy : {
+  userUserId : {
     type : Sequelize.INTEGER,
     allowNull :false,
     foreignKey : true
