@@ -5,7 +5,25 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const posts = require("../models/posts");
 const comments = require("../models/comments");
-exports.getUsers = async (req, res, next) => {
+
+exports.getUsers = async(req,res,next) => {
+  try{
+    const result = await User.findAll({
+      where : { isDeleted : 0}
+    })
+    if(result){
+      logger.info("Sending all users data to the server");
+      res.status(statusCode.OK).send({
+        users: result
+      });
+    }
+  }
+  catch(err){
+    next(err);
+  }
+}
+
+exports.allPosts = async (req, res, next) => {
   try {
     // Finding all the users to send the data
     const result = await User.findAll(
@@ -23,7 +41,7 @@ exports.getUsers = async (req, res, next) => {
       },
       { where: { isDeleted: 0 } }
     );
-    logger.info("Sending all users data to the server");
+    logger.info("Sending all user posts data to the server");
     const resObj = result.map(user => {
       return Object.assign(
         {},
@@ -66,8 +84,6 @@ exports.getUsers = async (req, res, next) => {
       users: resObj
     });
   } catch (err) {
-    // Logging the error
-    logger.error(err);
     next(err);
   }
 };
@@ -115,7 +131,6 @@ exports.postSearchUsers = async (req, res, next) => {
       next(err);
     }
   } catch (err) {
-    logger.error(err);
     next(err);
   }
 };
@@ -149,7 +164,6 @@ exports.putUser = async (req, res, next) => {
       next(err);
     }
   } catch (err) {
-    logger.error(err);
     next(err);
   }
 };
@@ -178,8 +192,7 @@ exports.deleteUser = async (req, res, next) => {
       };
       next(err);
     }
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
     next(err);
   }
 };

@@ -42,7 +42,6 @@ exports.postSignup = async (req, res, next) => {
       next(err);
     }
   } catch (err) {
-    logger.error(err);
     next(err);
   }
 };

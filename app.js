@@ -94,6 +94,7 @@ app.use(function(err, req, res, next) {
     }
     //500 Error
     else {
+      log.error(err);
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     }
   }

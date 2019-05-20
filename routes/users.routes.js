@@ -5,9 +5,9 @@ const deleteValdation = require("../validation/delete.validate");
 const expressJoi = require("express-joi-validator");
 const verifyToken = require("../middleware/jwtTokenVerify");
 /* GET all users  users listing. */
-router.get("/all", verifyToken.checkToken, userService.getUsers);
-//Create POST
-
+router.get("/allPosts", verifyToken.checkToken, userService.allPosts);
+//Create send data
+router.get("/allUsers", verifyToken.checkToken, userService.getUsers)
 //User Search
 router.post("/search", verifyToken.checkToken, userService.postSearchUsers);
 // Update a single user
