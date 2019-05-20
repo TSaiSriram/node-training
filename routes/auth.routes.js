@@ -17,6 +17,8 @@ router.post("/login",
   expressJoi(loginValidation.loginUser),
   loginService.postLogin
 );
+//XL signup
+router.post("/xlSignup", signupService.xlSignup)
 // The Signup data will be validated and send to server for serving
 router.post("/signup",
   expressJoi(signupValidation.signupUser),

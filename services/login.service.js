@@ -4,6 +4,8 @@ const statusCode = require("../config/HTTP_CODES");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// const request = require('request-promise');
+
 exports.getLogin = (req, res) => {
   // Sending the response to user
   res.render("auth/login", { title: "Login" });
@@ -54,3 +56,7 @@ exports.postLogin = async (req, res, next) => {
     next(err);
   }
 };
+
+/** API path that will upload the files */
+
+
