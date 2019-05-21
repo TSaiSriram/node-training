@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const multer = require("multer");
 const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx");
+const rp = require('request-promise');
 
 exports.getSignUp = (req, res) => {
   // Sending signup page as response
@@ -49,7 +50,7 @@ exports.postSignup = async (req, res, next) => {
   }
 };
 
-exports.xlSignup = (req, res) => {
+exports.xlSignup = (req, res, next) => {
   const storage = multer.diskStorage({
     //multers disk storage settings
     destination: function(req, file, cb) {
@@ -109,11 +110,17 @@ exports.xlSignup = (req, res) => {
           if (err) {
             return res.status(400).send({ data: null });
           }
-          res.status(200).send({
-            Users: result.map(User => {
-              return { email: User.email, password: User.password };
-            })
-          });
+          var Users = result.map(user => {
+            return {email :user.email, password : user.password}
+          })
+         Users.forEach(user => {
+          rp({
+            method : 'POST',
+            uri : 'http://localhost:3000/signup',
+            body : user,
+            json : true
+          })
+         });
         }
       );
     } catch (e) {

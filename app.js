@@ -7,6 +7,19 @@ var usersRouter = require("./routes/users.routes");
 var app = express();
 const sequelize = require("./util/db.util");
 const authRouter = require("./routes/auth.routes");
+
+const cors = require('cors')
+// Enabling Cors
+
+const corsConfig = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+
+app.use(cors(corsConfig))
+
 // view engine setup
 
 app.set("views", "views");
@@ -17,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
 
 // Logging
 const log = require("./util/logger.util");

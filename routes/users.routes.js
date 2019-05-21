@@ -7,7 +7,7 @@ const verifyToken = require("../middleware/jwtTokenVerify");
 /* GET all users  users listing. */
 router.get("/allPosts", verifyToken.checkToken, userService.allPosts);
 //Create send data
-router.get("/allUsers", verifyToken.checkToken, userService.getUsers)
+router.get("/all",  userService.getUsers)
 //User Search
 router.post("/search", verifyToken.checkToken, userService.postSearchUsers);
 // Update a single user
