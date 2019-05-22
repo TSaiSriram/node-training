@@ -3,3 +3,4 @@ logs
 config
 input
 tmp
+*.xls
